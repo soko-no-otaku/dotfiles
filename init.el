@@ -32,6 +32,9 @@
 ;; 行番号・桁番号をモードラインに表示する・しない設定
 (line-number-mode t)   ; 行番号。tなら表示、nilなら非表示
 (column-number-mode t) ; 桁番号。tなら表示、nilなら非表示
+
+;; 現在時刻の書式
+(setq display-time-format "%m/%d %H:%M")
 ;; モードラインに現在時刻を表示する
 (display-time)
 
