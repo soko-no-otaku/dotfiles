@@ -6,6 +6,11 @@ export PATH=/usr/local/bin:$PATH
   export PATH=${HOME}/.rbenv/bin:${PATH} && \
   eval "$(rbenv init -)"
 
+# Initializing pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+
 # Settings for prompt
 autoload -U colors && colors
 PROMPT="%{$fg_bold[cyan]%}%n@%m%f $ %{$reset_color%}"
