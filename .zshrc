@@ -8,7 +8,7 @@ export PATH=/usr/local/bin:$PATH
 
 # Settings for prompt
 autoload -U colors && colors
-PROMPT="%{$fg_bold[cyan]%}%n@%m%f %{$reset_color%}$ "
+PROMPT="%{$fg_bold[cyan]%}%n@%m%f $ %{$reset_color%}"
 RPROMPT='[%.]'
 autoload -Uz vcs_info
 zstyle ':vcs_info:*' formats '(%b)'
