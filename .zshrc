@@ -7,7 +7,8 @@ export PATH=/usr/local/bin:$PATH
   eval "$(rbenv init -)"
 
 # Settings for prompt
-PROMPT='%F{cyan}%n@%m%f $ '
+autoload -U colors && colors
+PROMPT="%{$fg_bold[cyan]%}%n@%m%f %{$reset_color%}$ "
 RPROMPT='[%.]'
 autoload -Uz vcs_info
 zstyle ':vcs_info:*' formats '(%b)'
@@ -19,7 +20,7 @@ precmd () {
     [[ -n "$vcs_info_msg_0_" ]] && psvar[1]="$vcs_info_msg_0_"
 }
 
-RPROMPT="%1(v|%F{green}%1v%f-|)%F{cyan}[%.]%f"
+RPROMPT="%1(v|%{$fg_bold[green]%}%1v%f-|)%{$fg_bold[cyan]%}[%.]%f%{$reset_color%}"
 
 # Settings for complimentation
 autoload -U compinit
