@@ -11,8 +11,27 @@
 (package-initialize)
 
 ;; 言語設定
-(set-language-environment 'Japanese)
+(require 'mozc)
+(set-language-environment "Japanese")
+(setq default-input-method "japanese-mozc")
 (prefer-coding-system 'utf-8)
+;; 変換キーでかな
+(global-set-key [henkan]
+                (lambda () (interactive)
+                  (when (null current-input-method) (toggle-input-method))))
+;; 無変換キーで英数
+(global-set-key [muhenkan]
+                (lambda () (interactive)
+                  (inactivate-input-method)))
+;; 無変換キーのキーイベントをmozcから横取りする
+(defadvice mozc-handle-event (around intercept-keys (event))
+  (if (member event (list 'muhenkan))
+      (progn
+        (mozc-clean-up-session)
+        (toggle-input-method))
+    (progn
+      ad-do-it)))
+(ad-activate 'mozc-handle-event)
 
 ;; スタートアップメッセージを消す
 (setq inhibit-startup-message t)
@@ -80,7 +99,7 @@
 (setq ring-bell-function 'ignore)
 
 ;; フォント設定(よく分かってない)
-(set-face-attribute 'default nil :family "Rounded M+ 1m" :height 220)
+(set-fontset-font t 'japanese-jisx0208 (font-spec :family "Ricty Diminished"))
 
 ;; auto-complete
 (require 'auto-complete-config)
@@ -106,10 +125,10 @@
               (expand-file-name "~/bin")
               (expand-file-name "~/.emacs.d/bin")
               ))
-;; PATH と exec-path に同じ物を追加します
-(when (and (file-exists-p dir) (not (member dir exec-path)))
-  (setenv "PATH" (concat dir ":" (getenv "PATH")))
-  (setq exec-path (append (list dir) exec-path))))
+  ;; PATH と exec-path に同じ物を追加します
+  (when (and (file-exists-p dir) (not (member dir exec-path)))
+    (setenv "PATH" (concat dir ":" (getenv "PATH")))
+    (setq exec-path (append (list dir) exec-path))))
 
 ;; ---------------------------------------------------------
 ;; YaTeX の設定
@@ -122,10 +141,22 @@
       (cons (cons "\\.tex$" 'yatex-mode) auto-mode-alist))
 (autoload 'yatex-mode "yatex" "Yet Another LaTeX mode" t)
 (setq tex-command "platex")
-(setq dviprint-command-format "dvipdfmx %s")
+(setq dviprint-command-format "dvipdfmx -f ptex-ipaex.map %s")
 ;; use Preview.app
-(setq dvi2-command "open -a Preview")
+(setq dvi2-command "evince")
 (defvar YaTeX-dvi2-command-ext-alist
   '(("xdvi" . ".dvi")
     ("ghostview\\|gv" . ".ps")
-    ("acroread\\|pdf\\|Preview\\|open" . ".pdf")))
+    ("acroread\\|pdf\\|Preview\\|open\\|evince" . ".pdf")))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages (quote (yatex monokai-theme auto-complete))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
