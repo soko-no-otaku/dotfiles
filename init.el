@@ -148,6 +148,9 @@
   '(("xdvi" . ".dvi")
     ("ghostview\\|gv" . ".ps")
     ("acroread\\|pdf\\|Preview\\|open\\|evince" . ".pdf")))
+;; 自動改行する
+(add-hook 'yatex-mode-hook '(lambda () (auto-fill-mode t)))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
