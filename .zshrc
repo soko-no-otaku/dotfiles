@@ -11,9 +11,11 @@ export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 
+export PATH="$PYENV_ROOT/versions/anaconda3-4.3.1/bin:$PATH"
+
 # Settings for prompt
 autoload -U colors && colors
-PROMPT="%{$fg_bold[cyan]%}%n@%m%f $ %{$reset_color%}"
+PROMPT="$ "
 RPROMPT='[%.]'
 autoload -Uz vcs_info
 zstyle ':vcs_info:*' formats '(%b)'
@@ -48,3 +50,4 @@ bindkey "^P" history-beginning-search-backward-end
 bindkey "^N" history-beginning-search-forward-end
 
 setopt auto_cd
+setopt nonomatch
