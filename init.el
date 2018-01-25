@@ -63,8 +63,8 @@
 (setq make-backup-files nil)
 (setq auto-save-default nil)
 
-;; フルスクリーンにする
-(set-frame-parameter nil 'fullscreen 'fullboth)
+;; カーソルを縦棒型にする
+(setq-default cursor-type 'bar)
 ;; 透明度
 (if window-system
     (set-frame-parameter nil 'alpha 90)
